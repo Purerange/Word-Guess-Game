@@ -1,0 +1,9 @@
+.container {
+    width: 600px;
+    border: 5px dotted;
+    padding: 10px;
+}
+
+#gamePane {
+    border-left: 8px dashed;
+}
