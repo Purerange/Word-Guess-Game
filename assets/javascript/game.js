@@ -35,9 +35,9 @@ var possibleWords = [
 ]
 
 var wordArray = [];
-var displayWord = "";
+var displayArray = [];
 var remainingGuesses = 15;
-var lettersGuessed = "";
+var lettersGuessed = [];
 var wins = 0;
 
 function newWord(){
@@ -53,30 +53,86 @@ function insertWord(word) {
 
     for (let j = 0; j < wordArray.length; j++) {
         if (wordArray[j] === " ") {
-            displayWord = displayWord + "  ";
+            displayArray[j] = " ";
         } else {
-            displayWord = displayWord + " _";
+            displayArray[j] = "_";
         }
     }
-    console.log(displayWord);
+    console.log(displayArray);
 
-    updateDisplay(displayWord);
+    updateDisplay(displayArray);
 }
 
 function updateWins(wins) {
     $("#wins").text(wins);
 }
 
-function updateDisplay(displayWord) {
-    $("#displayWord").html("<pre>" + displayWord + "</pre>");
+function updateDisplay(displayArray) {
+    var displayText = "";
+
+    for (let i = 0; i < displayArray.length; i++) {
+        displayText = displayText + " " + displayArray[i];
+    }
+
+    console.log(displayText);
+    $("#displayWord").html("<pre>" + displayText + "</pre>");
 }
 
-function updateGuesses(remainingGuesses) {
+function updateGuesses() {
     $("#remainingGuesses").text(remainingGuesses);
 }
 
-function updateLettersGuessed(lettersGuessed) {
-    $("#lettersGuessed").html("<pre>" + lettersGuessed + "</pre>");
+function updateLettersGuessed() {
+    var lettersText = "";
+
+    for (let i = 0; i < lettersGuessed.length; i++) {
+        if (i === 0) {
+            lettersText = lettersGuessed[0];
+        } else {
+            lettersText = lettersText + ", " + lettersGuessed[i];
+        }
+    }
+    
+
+    $("#lettersGuessed").html(lettersText);
+}
+
+function guessLetter(keyPressed) {
+    var count = 0;
+
+    // Checks to see if the letter has already been guessed.
+    var hasBeenGuessed = false;
+    for (let j = 0; j < lettersGuessed.length; j++) {
+        if (keyPressed == lettersGuessed[j]) {
+            hasBeenGuessed = true;
+        }
+    }
+
+    console.log(hasBeenGuessed);
+
+    // If the letter has been guessed, nothing happens
+    if (hasBeenGuessed === false) {
+        for (let i = 0; i < wordArray.length; i++) {
+
+            // If the letter is in the word(s)...
+            if (keyPressed === wordArray[i]) {
+                count++;
+                displayArray[i] = wordArray[i];
+                updateDisplay(displayArray);
+            }
+        }
+
+        // If the letter is not in the word(s) at all...
+        if (count === 0) {
+            remainingGuesses--;
+            updateGuesses();
+            lettersGuessed.push(keyPressed);
+            updateLettersGuessed();
+            console.log(lettersGuessed);
+        }
+
+        // Need any else functionality here for what happens if the letter has been guessed?
+    }
 }
 
 $(document).ready(function() {
@@ -99,5 +155,9 @@ $(document).keyup(function(e) {
 
     // Need to figure out why this equals "t" when F5 is released.
     var keyPressed = String.fromCharCode(e.keyCode);
-    console.log(keyPressed);
+    if (keyPressed !== "t"){
+        console.log(keyPressed);
+
+        guessLetter(keyPressed);
+    }
 })
