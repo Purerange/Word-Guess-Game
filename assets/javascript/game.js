@@ -31,20 +31,87 @@ var possibleWords = [
     "BILL POTTS",
     "THE SILENCE",
     "SLITHEEN",
-    "WEEPING ANGEL"
+    "WEEPING ANGEL",
 ]
+
+var wordImages = {
+    "THE DOCTOR": "the-doctor.jpg",
+    "THE MASTER": "the-master.jpg",
+    "DALEK": "dalek.jpg",
+    "TARDIS": "tardis.jpg",
+    "CYBERMAN": "",
+    "SONTARAN": "",
+    "GALLIFREY": "",
+    "ZYGON": "",
+    "COMPANION": "",
+    "TORCHWOOD": "",
+    "SONIC SCREWDRIVER": "",
+    "EXTERMINATE": "",
+    "ROSE TYLER": "",
+    "BAD WOLF": "",
+    "TIME LORD": "",
+    "BOW TIE": "",
+    "RIVER SONG": "",
+    "FANTASTIC": "",
+    "ALLONS Y": "",
+    "GERONIMO": "",
+    "TIME VORTEX": "",
+    "JACK HARKNESS": "",
+    "DONNA NOBLE": "",
+    "MARTHA JONES": "",
+    "AMY POND": "",
+    "RORY WILLIAMS": "",
+    "CLARA OSWALD": "",
+    "NARDOLE": "",
+    "BILL POTTS": "",
+    "THE SILENCE": "",
+    "SLITHEEN": "",
+    "WEEPING ANGEL": "",
+}
 
 var wordArray = [];
 var displayArray = [];
 var remainingGuesses = 15;
-var lettersGuessed = [];
+var lettersGuessed = ["--"];
 var wins = 0;
+var word;
+
+function didIWin() {
+    var count = 0;
+    for (let i = 0; i < displayArray.length; i++) {
+        if (displayArray[i] === "_") {
+            count++;
+        }
+    }
+
+    if (count === 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function reset(){
+    word = newWord();
+
+    console.log("Your word is: " + word);
+
+    updateWins(wins);
+
+    insertWord(word);
+
+    updateGuesses(remainingGuesses);
+
+    updateLettersGuessed(lettersGuessed);
+}
 
 function newWord(){
     return possibleWords[Math.floor(Math.random() * possibleWords.length)];
 }
 
 function insertWord(word) { 
+    wordArray = [];
+    displayArray =[];
 
     for (let i = 0; i < word.length; i++) {
         wordArray.push(word[i]);
@@ -63,7 +130,7 @@ function insertWord(word) {
     updateDisplay(displayArray);
 }
 
-function updateWins(wins) {
+function updateWins() {
     $("#wins").text(wins);
 }
 
@@ -84,7 +151,7 @@ function updateGuesses() {
 
 function updateLettersGuessed() {
     var lettersText = "";
-
+    
     for (let i = 0; i < lettersGuessed.length; i++) {
         if (i === 0) {
             lettersText = lettersGuessed[0];
@@ -93,8 +160,12 @@ function updateLettersGuessed() {
         }
     }
     
-
     $("#lettersGuessed").html(lettersText);
+}
+
+function updatePicture(){
+    var imgName = wordImages(word);
+    $("#wordImage").attr("src", "images/word-images/" + imgName);
 }
 
 function guessLetter(keyPressed) {
@@ -126,38 +197,43 @@ function guessLetter(keyPressed) {
         if (count === 0) {
             remainingGuesses--;
             updateGuesses();
-            lettersGuessed.push(keyPressed);
+            if (lettersGuessed[0] === "--"){
+                lettersGuessed[0] = keyPressed;
+            } else {
+                lettersGuessed.push(keyPressed);
+            }
             updateLettersGuessed();
             console.log(lettersGuessed);
         }
 
         // Need any else functionality here for what happens if the letter has been guessed?
     }
+
+    // Check to see if the user won the game, and if so, do the winning stuff.
+    if (didIWin()){
+        updatePicture();
+        $("#lastWord").text(word);
+        wins++;
+        updateWins();
+        remainingGuesses = 15;
+        lettersGuessed = ["--"];
+        reset();
+    }
 }
 
-$(document).ready(function() {
-
-    var word = newWord();
-
-    console.log("Your word is: " + word);
-
-    updateWins(wins);
-
-    insertWord(word);
-
-    updateGuesses(remainingGuesses);
-
-    updateLettersGuessed(lettersGuessed);
-    
-})
+$(document).ready(reset());
 
 $(document).keyup(function(e) {
 
-    // Need to figure out why this equals "t" when F5 is released.
-    var keyPressed = String.fromCharCode(e.keyCode);
-    if (keyPressed !== "t"){
-        console.log(keyPressed);
+    // Makes sure the key that was pressed is a letter
+    if (e.keyCode >= 65 && e.keyCode <= 90){
 
-        guessLetter(keyPressed);
+        var keyPressed = String.fromCharCode(e.keyCode);
+        if (keyPressed !== "t"){
+            console.log(keyPressed);
+
+            guessLetter(keyPressed);
+        }
+
     }
 })
