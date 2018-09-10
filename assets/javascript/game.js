@@ -274,9 +274,12 @@ $(document).keyup(function(e) {
     // Makes sure the key that was pressed is a letter
     if (e.keyCode >= 65 && e.keyCode <= 90){
 
-        var keyPressed = String.fromCharCode(e.keyCode);
-    
-        guessLetter(keyPressed);
+        if (wins === 32) {
+            alert("You have already guessed all the words! Refresh to start over!");
+        } else {
+            var keyPressed = String.fromCharCode(e.keyCode);
         
+            guessLetter(keyPressed);
+        }
     }
 })
