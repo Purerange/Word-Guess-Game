@@ -242,7 +242,7 @@ function guessLetter(keyPressed) {
 
     // Check to see if the user won the game, and if so, do the winning stuff.
     if (didIWin()){
-        restartSong();
+        // restartSong();
         wins++;
         updateWins();
 
@@ -267,7 +267,10 @@ function guessLetter(keyPressed) {
     }
 }
 
-$(document).ready(reset());
+$(document).ready(function() {
+    reset();
+    restartSong();
+});
 
 $(document).keyup(function(e) {
 
