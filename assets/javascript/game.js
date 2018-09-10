@@ -39,34 +39,34 @@ var wordImages = {
     "THE MASTER": "the-master.jpg",
     "DALEK": "dalek.jpg",
     "TARDIS": "tardis.jpg",
-    "CYBERMAN": "",
-    "SONTARAN": "",
-    "GALLIFREY": "",
-    "ZYGON": "",
-    "COMPANION": "",
-    "TORCHWOOD": "",
-    "SONIC SCREWDRIVER": "",
-    "EXTERMINATE": "",
-    "ROSE TYLER": "",
-    "BAD WOLF": "",
-    "TIME LORD": "",
-    "BOW TIE": "",
-    "RIVER SONG": "",
-    "FANTASTIC": "",
-    "ALLONS Y": "",
-    "GERONIMO": "",
-    "TIME VORTEX": "",
-    "JACK HARKNESS": "",
-    "DONNA NOBLE": "",
-    "MARTHA JONES": "",
-    "AMY POND": "",
-    "RORY WILLIAMS": "",
-    "CLARA OSWALD": "",
-    "NARDOLE": "",
-    "BILL POTTS": "",
-    "THE SILENCE": "",
-    "SLITHEEN": "",
-    "WEEPING ANGEL": "",
+    "CYBERMAN": "cyberman.jpg",
+    "SONTARAN": "sontaran.jpg",
+    "GALLIFREY": "gallifrey.jpg",
+    "ZYGON": "zygon.jpg",
+    "COMPANION": "companion.png",
+    "TORCHWOOD": "torchwood.jpg",
+    "SONIC SCREWDRIVER": "sonic-screwdriver.jpg",
+    "EXTERMINATE": "exterminate.jpg",
+    "ROSE TYLER": "rose-tyler.png",
+    "BAD WOLF": "bad-wolf.jpg",
+    "TIME LORD": "time-lord.jpg",
+    "BOW TIE": "bow-tie.jpg",
+    "RIVER SONG": "river-song",
+    "FANTASTIC": "fantastic.png",
+    "ALLONS Y": "allons-y.jpg",
+    "GERONIMO": "geronimo.jpg",
+    "TIME VORTEX": "time-vortex.jpg",
+    "JACK HARKNESS": "jack-harkness.jpg",
+    "DONNA NOBLE": "donna-noble.jpg",
+    "MARTHA JONES": "martha-jones.jpg",
+    "AMY POND": "amy-pong.jpg",
+    "RORY WILLIAMS": "rory-williams.jpg",
+    "CLARA OSWALD": "clara-oswald.jpg",
+    "NARDOLE": "nardole.jpg",
+    "BILL POTTS": "bill-potts.png",
+    "THE SILENCE": "the-silence.jpg",
+    "SLITHEEN": "slitheen.jpg",
+    "WEEPING ANGEL": "weeping-angel.jpg"
 }
 
 var wordArray = [];
@@ -219,6 +219,8 @@ function guessLetter(keyPressed) {
         lettersGuessed = ["--"];
         reset();
     }
+
+    // Need to add in lose mechanic.
 }
 
 $(document).ready(reset());
