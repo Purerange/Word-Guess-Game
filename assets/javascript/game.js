@@ -65,14 +65,14 @@ var wordImages = {
     "NARDOLE": "nardole.jpg",
     "BILL POTTS": "bill-potts.png",
     "THE SILENCE": "the-silence.jpg",
-    "SLITHEEN": "slitheen.jpg",
+    "SLITHEEN": "slitheen.jpg",s
     "WEEPING ANGEL": "weeping-angel.jpg"
 }
 
 
 var displayArray = [];
-var remainingGuesses = 15;
 var lettersGuessed = ["--"];
+var remainingGuesses = 15;
 var wins = 0;
 var word;
 var wordArray = [];
