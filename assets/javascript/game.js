@@ -51,7 +51,7 @@ var wordImages = {
     "BAD WOLF": "bad-wolf.jpg",
     "TIME LORD": "time-lord.jpg",
     "BOW TIE": "bow-tie.jpg",
-    "RIVER SONG": "river-song",
+    "RIVER SONG": "river-song.jpg",
     "FANTASTIC": "fantastic.png",
     "ALLONS Y": "allons-y.jpg",
     "GERONIMO": "geronimo.jpg",
@@ -59,7 +59,7 @@ var wordImages = {
     "JACK HARKNESS": "jack-harkness.jpg",
     "DONNA NOBLE": "donna-noble.jpg",
     "MARTHA JONES": "martha-jones.jpg",
-    "AMY POND": "amy-pong.jpg",
+    "AMY POND": "amy-pond.jpg",
     "RORY WILLIAMS": "rory-williams.jpg",
     "CLARA OSWALD": "clara-oswald.jpg",
     "NARDOLE": "nardole.jpg",
@@ -69,12 +69,14 @@ var wordImages = {
     "WEEPING ANGEL": "weeping-angel.jpg"
 }
 
-var wordArray = [];
+
 var displayArray = [];
 var remainingGuesses = 15;
 var lettersGuessed = ["--"];
 var wins = 0;
 var word;
+var wordArray = [];
+var wordsGuessed = [];
 
 function didIWin() {
     var count = 0;
@@ -91,6 +93,57 @@ function didIWin() {
     }
 }
 
+function gameOver() {
+    alert("You have run out of guesses! The word was " + word + ". Game Over...");
+
+    hardReset();
+}
+
+function hardReset() {
+    wins = 0;
+    remainingGuesses = 15;
+    wordsGuessed = [];
+    lettersGuessed = [];
+    $("#wordImage").attr("src", "assets/images/placeholder.png")
+    $("#lastWord").text("");
+    reset();
+}
+
+function insertWord(word) { 
+    wordArray = [];
+    displayArray =[];
+
+    for (let i = 0; i < word.length; i++) {
+        wordArray.push(word[i]);
+    }
+
+    for (let j = 0; j < wordArray.length; j++) {
+        if (wordArray[j] === " ") {
+            displayArray[j] = " ";
+        } else {
+            displayArray[j] = "_";
+        }
+    }
+
+    updateDisplay(displayArray);
+}
+
+function newWord(){
+    var newWord;
+    
+    do {
+        newWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+        var isUnique = true;
+        for (let i = 0; i < wordsGuessed.length; i++) {
+            if (newWord === wordsGuessed[i]) {
+                isUnique = false;
+            }
+        }
+    } while (!isUnique);
+    
+    return newWord;
+}
+
 function reset(){
     word = newWord();
 
@@ -105,35 +158,6 @@ function reset(){
     updateLettersGuessed(lettersGuessed);
 }
 
-function newWord(){
-    return possibleWords[Math.floor(Math.random() * possibleWords.length)];
-}
-
-function insertWord(word) { 
-    wordArray = [];
-    displayArray =[];
-
-    for (let i = 0; i < word.length; i++) {
-        wordArray.push(word[i]);
-    }
-    console.log(wordArray);
-
-    for (let j = 0; j < wordArray.length; j++) {
-        if (wordArray[j] === " ") {
-            displayArray[j] = " ";
-        } else {
-            displayArray[j] = "_";
-        }
-    }
-    console.log(displayArray);
-
-    updateDisplay(displayArray);
-}
-
-function updateWins() {
-    $("#wins").text(wins);
-}
-
 function updateDisplay(displayArray) {
     var displayText = "";
 
@@ -141,7 +165,6 @@ function updateDisplay(displayArray) {
         displayText = displayText + " " + displayArray[i];
     }
 
-    console.log(displayText);
     $("#displayWord").html("<pre>" + displayText + "</pre>");
 }
 
@@ -164,8 +187,12 @@ function updateLettersGuessed() {
 }
 
 function updatePicture(){
-    var imgName = wordImages(word);
-    $("#wordImage").attr("src", "images/word-images/" + imgName);
+    var imgName = wordImages[word];
+    $("#wordImage").attr("src", "assets/images/word-images/" + imgName);
+}
+
+function updateWins() {
+    $("#wins").text(wins);
 }
 
 function guessLetter(keyPressed) {
@@ -178,8 +205,6 @@ function guessLetter(keyPressed) {
             hasBeenGuessed = true;
         }
     }
-
-    console.log(hasBeenGuessed);
 
     // If the letter has been guessed, nothing happens
     if (hasBeenGuessed === false) {
@@ -197,13 +222,14 @@ function guessLetter(keyPressed) {
         if (count === 0) {
             remainingGuesses--;
             updateGuesses();
-            if (lettersGuessed[0] === "--"){
+            if (remainingGuesses === 0) {
+                gameOver();
+            } else if (lettersGuessed[0] === "--"){
                 lettersGuessed[0] = keyPressed;
             } else {
                 lettersGuessed.push(keyPressed);
             }
             updateLettersGuessed();
-            console.log(lettersGuessed);
         }
 
         // Need any else functionality here for what happens if the letter has been guessed?
@@ -211,16 +237,29 @@ function guessLetter(keyPressed) {
 
     // Check to see if the user won the game, and if so, do the winning stuff.
     if (didIWin()){
-        updatePicture();
-        $("#lastWord").text(word);
+
         wins++;
         updateWins();
-        remainingGuesses = 15;
-        lettersGuessed = ["--"];
-        reset();
-    }
 
-    // Need to add in lose mechanic.
+        updatePicture();
+
+        $("#lastWord").text(word);
+
+        if (wins === 32){
+
+            alert("You have guessed all the words! Congratulations!");
+
+        } else {
+
+            remainingGuesses = 15;
+
+            lettersGuessed = ["--"];
+
+            wordsGuessed.push(word);
+
+            reset();
+        }
+    }
 }
 
 $(document).ready(reset());
@@ -231,11 +270,8 @@ $(document).keyup(function(e) {
     if (e.keyCode >= 65 && e.keyCode <= 90){
 
         var keyPressed = String.fromCharCode(e.keyCode);
-        if (keyPressed !== "t"){
-            console.log(keyPressed);
-
-            guessLetter(keyPressed);
-        }
-
+    
+        guessLetter(keyPressed);
+        
     }
 })
