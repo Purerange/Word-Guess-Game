@@ -55,7 +55,7 @@ h4#begin {
     padding: 10px;
     background: #003b6f;
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 #displayWord {
@@ -75,5 +75,9 @@ h4#begin {
 #audio {
     border: none;
     background: none;
+}
+
+#audio > h3 {
+    margin-top: none;
 }
 
