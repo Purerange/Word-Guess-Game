@@ -65,7 +65,7 @@ var wordImages = {
     "NARDOLE": "nardole.jpg",
     "BILL POTTS": "bill-potts.png",
     "THE SILENCE": "the-silence.jpg",
-    "SLITHEEN": "slitheen.jpg",s
+    "SLITHEEN": "slitheen.jpg",
     "WEEPING ANGEL": "weeping-angel.jpg"
 }
 
