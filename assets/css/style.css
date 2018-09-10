@@ -1,9 +1,74 @@
+@font-face {
+    font-family: doctorWhoFont;
+    src: url(Doctor-Who.ttf);
+}
+
+body {
+    font-family: doctorWhoFont;
+    font-size: 25px;
+    color:#a6b8c7;
+    background: url(../images/tardis-in-space.jpg);
+    background-size: 100%;
+}
+
+pre {
+    font-family: doctorWhoFont;
+    font-size: 25px;
+    color:#a6b8c7;
+}
+
+h1,
+h2 {
+    color: #6f8ea9;
+    /* font-weight: bold; */
+}
+
+h1 {
+    font-size: 85px;
+}
+
+h2 {
+    font-size: 55px;
+}
+
+h3 {
+    margin-top: 45px;
+    font-size: 40px;
+}
+
+h4 {
+    margin-top: 25px;
+    font-size: 25px;
+}
+
+h4#begin {
+    margin-top: 15px;
+}
+
+#wordImage {
+    margin-top: 10px;
+}
+
 .container {
-    width: 600px;
-    border: 5px dotted;
+    width: 650px;
+    border: 5px solid;
     padding: 10px;
+    background: #003b6f;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+#displayWord {
+    font-size: 15px;
 }
 
 #gamePane {
     border-left: 8px dashed;
 }
+
+.jumbotron {
+    padding: 20px 0 20px;
+    background: none;
+    margin-bottom: 0;
+}
+
