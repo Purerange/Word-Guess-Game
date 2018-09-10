@@ -250,7 +250,7 @@ function guessLetter(keyPressed) {
 
         $("#lastWord").text(word);
 
-        if (wins === 32){
+        if (wins === possibleWords.lenth){
 
             alert("You have guessed all the words! Congratulations!");
 
