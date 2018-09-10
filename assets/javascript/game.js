@@ -158,6 +158,11 @@ function reset(){
     updateLettersGuessed(lettersGuessed);
 }
 
+function restartSong() {
+    document.getElementById("song").currentTime = 0;
+    document.getElementById("song").play();
+}
+
 function updateDisplay(displayArray) {
     var displayText = "";
 
@@ -237,7 +242,7 @@ function guessLetter(keyPressed) {
 
     // Check to see if the user won the game, and if so, do the winning stuff.
     if (didIWin()){
-        document.getElementById("song").play();
+        restartSong();
         wins++;
         updateWins();
 
