@@ -8,7 +8,7 @@ body {
     font-size: 25px;
     color:#a6b8c7;
     background: url(../images/tardis-in-space.jpg);
-    background-size: 100%;
+    background-size: 100% 100%;
 }
 
 pre {
